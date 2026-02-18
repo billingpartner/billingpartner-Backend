@@ -30,6 +30,11 @@ const User = {
         const query = 'UPDATE users SET password = ? WHERE email = ?';
         const [result] = await db.execute(query, [newPassword, email]);
         return result;
+    },
+    updateDetails: async (email, details) => {
+        const query = 'UPDATE users SET companyname = ?, address = ?, gstin = ? WHERE email = ?';
+        const [result] = await db.execute(query, [details.companyname, details.address, details.gstin, email]);
+        return result;
     }
 };
 

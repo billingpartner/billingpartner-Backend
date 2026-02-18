@@ -74,4 +74,26 @@ const getUserDetails = async (req, res) => {
     }
 }
 
-module.exports = { signup, login, forgotPassword, getUserDetails };
+const updateUserDetails = async (req, res) => {
+    try {
+        const { companyname, address, gstin } = req.body;
+
+        // Validation 
+        if (!companyname || !address || !gstin) {
+            return res.status(400).send({ message: "Company name, address, and GSTIN are required." });
+        }
+
+        const result = await User.updateDetails(req.userId, { companyname, address, gstin });
+
+        if (result.affectedRows === 0) {
+            return res.status(404).send({ message: "User not found or no changes made." });
+        }
+
+        res.status(200).send({ message: "User details updated successfully." });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: "Error updating user details." });
+    }
+}
+
+module.exports = { signup, login, forgotPassword, getUserDetails, updateUserDetails };

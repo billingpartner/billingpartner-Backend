@@ -78,6 +78,11 @@ The server will start on port 3000 (or the PORT defined in `.env`). It will auto
     -   Get details of the logged-in user.
     -   Header: `Authorization: Bearer <token>`
 
+-   **PUT /api/users/me**
+    -   Update user details.
+    -   Header: `Authorization: Bearer <token>`
+    -   Body: `{ "companyname": "...", "address": "...", "gstin": "..." }`
+
 ## Deployment
 
 When deploying (e.g., on Render), ensure:
