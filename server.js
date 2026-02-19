@@ -4,7 +4,8 @@ const cors = require('cors');
 require('dotenv').config();
 
 const userRoutes = require('./src/user/userRoutes');
-const User = require('./src/user/userModel');
+const billsRoutes = require('./src/bills/billsRoutes');
+const sequelize = require('./config/database');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/api/bills', billsRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
@@ -22,12 +24,12 @@ app.get('/', (req, res) => {
 });
 
 // Initialize DB Table
-User.initTable()
+sequelize.sync()
     .then(() => {
-        console.log("User table initialized.");
+        console.log("Database & tables created!");
     })
     .catch(err => {
-        console.error("Failed to initialize user table:", err);
+        console.error("Failed to sync database:", err);
     });
 
 app.listen(PORT, () => {

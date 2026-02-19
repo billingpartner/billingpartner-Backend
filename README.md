@@ -1,90 +1,134 @@
 # Billing Partner Backend
 
-This is the backend service for the Billing Partner application, built with Node.js, Express, and MySQL. It features JWT-based authentication.
+A simple and secure Node.js backend for managing User Profiles and Bills.
 
-## Features
+## 🚀 Quick Start
 
-- **User Authentication**: Signup, Login, Forgot Password.
-- **JWT Protection**: Secure endpoints using JSON Web Tokens.
-- **MySQL Database**: Persistent data storage with a connection pool.
-- **Secure Configuration**: Environment-based configuration.
-
-## Prerequisites
-
-- Node.js (v14 or higher)
-- MySQL Database
-
-## Installation
-
-1.  Clone the repository:
-    ```bash
-    git clone https://github.com/billingpartner/billingpartner-Backend.git
-    cd billingpartner-Backend
-    ```
-
-2.  Install dependencies:
+1.  **Install Dependencies:**
     ```bash
     npm install
     ```
 
-## Configuration
-
-1.  Create a `.env` file in the root directory (or ensure the environment variables are set in your deployment platform).
-2.  Add the following variables:
-
+2.  **Setup Environment:**
+    Create a `.env` file in the main folder with these details:
     ```env
-    DB_HOST=your_db_host
-    DB_PORT=your_db_port
-    DB_USER=your_db_user
-    DB_PASSWORD=your_db_password
-    DB_NAME=your_db_name
+    DB_HOST=...
+    DB_USER=...
+    DB_PASSWORD=...
+    DB_NAME=...
+    DB_PORT=...
     DB_SSL_CA=./config/ca.pem
-    JWT_SECRET=your_jwt_secret
+    JWT_SECRET=supersecretkey
     PORT=3000
     ```
 
-    *Note: The `config/ca.pem` file is required for SSL connections to the database (e.g., Aiven).*
+3.  **Run the Server:**
+    ```bash
+    npm start
+    ```
+    The server runs on `http://localhost:3000`.
 
-## Running the Application
+---
 
-### Development
-Start the server with Node:
-```bash
-node server.js
-```
+## 📡 API Endpoints
 
-The server will start on port 3000 (or the PORT defined in `.env`). It will automatically attempt to create the `users` table if it doesn't exist.
+### 1️⃣ User Authentication
 
-## API Endpoints
+**Sign Up**
+-   **URL:** `/api/users/signup`
+-   **Method:** `POST`
+-   **Body:**
+    ```json
+    {
+      "user": "John Doe",
+      "companyname": "John's Tech",
+      "address": "123 Main St",
+      "gstin": "29ABCDE1234F1Z5",
+      "email": "john@example.com",
+      "phone": "9876543210",
+      "password": "secretpassword"
+    }
+    ```
 
-### Auth
+**Login**
+-   **URL:** `/api/users/login`
+-   **Method:** `POST`
+-   **Body:**
+    ```json
+    {
+      "phone": "9876543210",
+      "password": "secretpassword"
+    }
+    ```
+-   **Returns:** A `token`. You must use this token for other requests.
 
--   **POST /api/users/signup**
-    -   Register a new user.
-    -   Body: `{ "user": "Name", "companyname": "Co", "address": "...", "gstin": "...", "email": "...", "phone": "...", "password": "..." }`
+**Forgot Password**
+-   **URL:** `/api/users/forgot-password`
+-   **Method:** `POST`
+-   **Body:**
+    ```json
+    {
+      "phone": "9876543210",
+      "newPassword": "newsecretpassword"
+    }
+    ```
 
--   **POST /api/users/login**
-    -   Login to receive a JWT token.
-    -   Body: `{ "email": "...", "password": "..." }`
-    -   Response: `{ "auth": true, "token": "..." }`
+### 2️⃣ User Profile (Requires Login)
 
--   **POST /api/users/forgot-password**
-    -   Reset user password.
-    -   Body: `{ "email": "...", "newPassword": "..." }`
+*Add Header: `Authorization: Bearer YOUR_TOKEN_HERE`*
 
-### User
+**Get My Details**
+-   **URL:** `/api/users/me`
+-   **Method:** `GET`
 
--   **GET /api/users/me**
-    -   Get details of the logged-in user.
-    -   Header: `Authorization: Bearer <token>`
+**Update My Details**
+-   **URL:** `/api/users/me`
+-   **Method:** `PUT`
+-   **Body:**
+    ```json
+    {
+      "companyname": "New Company Name",
+      "address": "New Address",
+      "gstin": "NEWGSTIN123"
+    }
+    ```
 
--   **PUT /api/users/me**
-    -   Update user details.
-    -   Header: `Authorization: Bearer <token>`
-    -   Body: `{ "companyname": "...", "address": "...", "gstin": "..." }`
+### 3️⃣ Bills (Requires Login)
 
-## Deployment
+*Add Header: `Authorization: Bearer YOUR_TOKEN_HERE`*
 
-When deploying (e.g., on Render), ensure:
-1.  All environment variables from `.env` are set in the platform's environment settings.
-2.  The `config/ca.pem` file is present in the repository (it is included in the repo).
+**Create a Bill**
+-   **URL:** `/api/bills`
+-   **Method:** `POST`
+-   **Body:**
+    ```json
+    {
+      "companyName": "My Company",
+      "address": "My Address",
+      "gstin": "MYGSTIN",
+      "customerName": "Client Name",
+      "customerNumber": "9988776655",
+      "billDate": "2023-10-27",
+      "billItems": [
+        { "name": "Service A", "quantity": 1, "price": 1000, "discount": 0, "total": 1000 }
+      ],
+      "subtotal": 1000,
+      "tax": 18,
+      "taxAmount": 180,
+      "grandTotal": 1180
+    }
+    ```
+
+**Get All Bills**
+-   **URL:** `/api/bills`
+-   **Method:** `GET`
+
+---
+
+## 🗄️ Database
+
+The project uses a MySQL database with two main tables:
+1.  **Users:** Stores user login and profile info.
+2.  **Bills:** Stores billing records linked to users.
+
+The database tables are automatically created when you start the server.
