@@ -6,6 +6,7 @@ require('dotenv').config();
 const userRoutes = require('./src/user/userRoutes');
 const billsRoutes = require('./src/bills/billsRoutes');
 const productRoutes = require('./src/product/productRoutes');
+const clientRoutes = require('./src/client/clientRoutes');
 const sequelize = require('./config/database');
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/users', userRoutes);
 app.use('/api/bills', billsRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/clients', clientRoutes);
 
 // Basic route
 app.get('/', (req, res) => {

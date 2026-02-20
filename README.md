@@ -1,6 +1,6 @@
 # Billing Partner Backend
 
-A simple and secure Node.js backend for managing User Profiles and Bills.
+A simple and secure Node.js backend for managing User Profiles, Bills, Products, and Clients.
 
 ## 🚀 Quick Start
 
@@ -158,13 +158,52 @@ A simple and secure Node.js backend for managing User Profiles and Bills.
 -   **URL:** `/api/products/:id`
 -   **Method:** `DELETE`
 
+### 5️⃣ Clients (Requires Login)
+
+*Add Header: `Authorization: Bearer YOUR_TOKEN_HERE`*
+
+**Create a Client**
+-   **URL:** `/api/clients`
+-   **Method:** `POST`
+-   **Body:**
+    ```json
+    {
+      "customerName": "John Doe",
+      "contactNumber": "9876543210"
+    }
+    ```
+
+**Get All Clients**
+-   **URL:** `/api/clients`
+-   **Method:** `GET`
+
+**Get a Single Client**
+-   **URL:** `/api/clients/:id`
+-   **Method:** `GET`
+
+**Update a Client**
+-   **URL:** `/api/clients/:id`
+-   **Method:** `PUT`
+-   **Body:**
+    ```json
+    {
+      "customerName": "Jane Doe",
+      "contactNumber": "9123456789"
+    }
+    ```
+
+**Delete a Client**
+-   **URL:** `/api/clients/:id`
+-   **Method:** `DELETE`
+
 ---
 
 ## 🗄️ Database
 
-The project uses a MySQL database with two main tables:
+The project uses a MySQL database with the following tables:
 1.  **Users:** Stores user login and profile info.
 2.  **Bills:** Stores billing records linked to users.
 3.  **Products:** Stores product details linked to users.
+4.  **Clients:** Stores client details (name, contact number) linked to users.
 
 The database tables are automatically created when you start the server.
