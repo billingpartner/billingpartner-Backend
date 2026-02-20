@@ -123,6 +123,41 @@ A simple and secure Node.js backend for managing User Profiles and Bills.
 -   **URL:** `/api/bills`
 -   **Method:** `GET`
 
+### 4️⃣ Products (Requires Login)
+
+*Add Header: `Authorization: Bearer YOUR_TOKEN_HERE`*
+
+**Create a Product**
+-   **URL:** `/api/products`
+-   **Method:** `POST`
+-   **Body:**
+    ```json
+    {
+      "name": "Product Name",
+      "category": "Category Name",
+      "price": 100.50
+    }
+    ```
+
+**Get All Products**
+-   **URL:** `/api/products`
+-   **Method:** `GET`
+
+**Update a Product**
+-   **URL:** `/api/products/:id`
+-   **Method:** `PUT`
+-   **Body:**
+    ```json
+    {
+      "name": "Updated Name",
+      "price": 150.00
+    }
+    ```
+
+**Delete a Product**
+-   **URL:** `/api/products/:id`
+-   **Method:** `DELETE`
+
 ---
 
 ## 🗄️ Database
@@ -130,5 +165,6 @@ A simple and secure Node.js backend for managing User Profiles and Bills.
 The project uses a MySQL database with two main tables:
 1.  **Users:** Stores user login and profile info.
 2.  **Bills:** Stores billing records linked to users.
+3.  **Products:** Stores product details linked to users.
 
 The database tables are automatically created when you start the server.
