@@ -4,7 +4,7 @@ const User = require('../user/userModel');
 // Create a new client
 exports.createClient = async (req, res) => {
     try {
-        const { customerName, contactNumber } = req.body;
+        const { customerName, contactNumber, customergstin } = req.body;
         const userPhone = req.userPhone;
 
         const user = await User.findOne({ where: { phone: userPhone } });
@@ -15,6 +15,7 @@ exports.createClient = async (req, res) => {
         const client = await Client.create({
             customerName,
             contactNumber,
+            customergstin,
             userid: user.id
         });
 
@@ -67,7 +68,7 @@ exports.getClientById = async (req, res) => {
 exports.updateClient = async (req, res) => {
     try {
         const { id } = req.params;
-        const { customerName, contactNumber } = req.body;
+        const { customerName, contactNumber, customergstin } = req.body;
         const userPhone = req.userPhone;
 
         const user = await User.findOne({ where: { phone: userPhone } });
@@ -82,6 +83,7 @@ exports.updateClient = async (req, res) => {
 
         client.customerName = customerName || client.customerName;
         client.contactNumber = contactNumber || client.contactNumber;
+        client.customergstin = customergstin !== undefined ? customergstin : client.customergstin;
 
         await client.save();
 

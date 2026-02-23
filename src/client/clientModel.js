@@ -16,6 +16,10 @@ const Client = sequelize.define('Client', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    customergstin: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     userid: {
         type: DataTypes.INTEGER,
         allowNull: false,

@@ -169,7 +169,8 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
     ```json
     {
       "customerName": "John Doe",
-      "contactNumber": "9876543210"
+      "contactNumber": "9876543210",
+      "customergstin": "29ABCDE1234F1Z5"
     }
     ```
 
@@ -188,7 +189,8 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
     ```json
     {
       "customerName": "Jane Doe",
-      "contactNumber": "9123456789"
+      "contactNumber": "9123456789",
+      "customergstin": "29XYZDE1234F1Z5"
     }
     ```
 
