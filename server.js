@@ -29,8 +29,9 @@ app.get('/', (req, res) => {
 
 // Initialize DB Table
 sequelize.sync()
-    .then(() => {
+    .then(async () => {
         console.log("Database & tables created!");
+        // Safely add customergstin column to clients table if it doesn't exist
     })
     .catch(err => {
         console.error("Failed to sync database:", err);
