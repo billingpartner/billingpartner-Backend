@@ -94,7 +94,7 @@ const updateUserDetails = async (req, res) => {
         const { companyname, address, addressline2, gstin } = req.body;
 
         // Validation 
-        if (!companyname || !address || !gstin) {
+        if (!companyname || !address) {
             return res.status(400).send({ message: "Company name, address, and GSTIN are required." });
         }
 
