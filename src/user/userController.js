@@ -4,14 +4,14 @@ const jwt = require('jsonwebtoken');
 
 const signup = async (req, res) => {
     try {
-        const { user, companyname, address, gstin, email, phone, password } = req.body;
+        const { user, companyname, address, addressline2, gstin, email, phone, password } = req.body;
         // Basic validation
         if (!user || !phone || !password) {
             return res.status(400).send({ message: "Missing required fields" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 8);
-        await User.create({ user, companyname, address, gstin, email, phone, password: hashedPassword });
+        await User.create({ user, companyname, address, addressline2, gstin, email, phone, password: hashedPassword });
 
         const token = jwt.sign({ phone: phone }, process.env.JWT_SECRET, { expiresIn: 86400 }); // 24 hours
         res.status(200).send({ auth: true, token });
@@ -91,7 +91,7 @@ const getUserDetails = async (req, res) => {
 
 const updateUserDetails = async (req, res) => {
     try {
-        const { companyname, address, gstin } = req.body;
+        const { companyname, address, addressline2, gstin } = req.body;
 
         // Validation 
         if (!companyname || !address || !gstin) {
@@ -99,7 +99,7 @@ const updateUserDetails = async (req, res) => {
         }
 
         const [affectedRows] = await User.update(
-            { companyname, address, gstin },
+            { companyname, address, addressline2, gstin },
             { where: { phone: req.userPhone } }
         );
 

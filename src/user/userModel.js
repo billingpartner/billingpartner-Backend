@@ -19,6 +19,10 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    addressline2: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     gstin: {
         type: DataTypes.STRING,
         allowNull: false

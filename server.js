@@ -31,7 +31,11 @@ app.get('/', (req, res) => {
 sequelize.sync()
     .then(async () => {
         console.log("Database & tables created!");
-        // Safely add customergstin column to clients table if it doesn't exist
+        // Safely add addressline2 column to users table if it doesn't exist
+        await sequelize.query(`
+            ALTER TABLE users 
+            ADD COLUMN IF NOT EXISTS addressline2 VARCHAR(255) NULL;
+        `).catch(() => { }); // Ignore if column already exists
     })
     .catch(err => {
         console.error("Failed to sync database:", err);
