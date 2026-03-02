@@ -11,9 +11,9 @@ const signup = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 8);
-        await User.create({ user, companyname, address, addressline2, gstin, email, phone, password: hashedPassword });
+        const newUser = await User.create({ user, companyname, address, addressline2, gstin, email, phone, password: hashedPassword });
 
-        const token = jwt.sign({ phone: phone }, process.env.JWT_SECRET, { expiresIn: 86400 }); // 24 hours
+        const token = jwt.sign({ id: newUser.id, phone: phone }, process.env.JWT_SECRET, { expiresIn: 86400 }); // 24 hours
         res.status(200).send({ auth: true, token });
     } catch (err) {
         console.error(err);
@@ -44,7 +44,7 @@ const login = async (req, res) => {
         const passwordIsValid = await bcrypt.compare(password, user.password);
         if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
-        const token = jwt.sign({ phone: user.phone }, process.env.JWT_SECRET, { expiresIn: 86400 });
+        const token = jwt.sign({ id: user.id, phone: user.phone }, process.env.JWT_SECRET, { expiresIn: 86400 });
         res.status(200).send({ auth: true, token });
     } catch (err) {
         console.error(err);

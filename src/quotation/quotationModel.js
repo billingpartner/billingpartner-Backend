@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 const User = require('../user/userModel');
 
-const Bill = sequelize.define('Bill', {
+const Quotation = sequelize.define('Quotation', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -81,30 +81,17 @@ const Bill = sequelize.define('Bill', {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false
     },
-    paymentStatus: {
-        type: DataTypes.ENUM('Pending', 'Paid', 'Partial', 'Cancelled'),
-        allowNull: false,
-        defaultValue: 'Pending'
-    },
-    paymentMode: {
-        type: DataTypes.ENUM('Cash', 'UPI', 'Bank Transfer', 'Cheque', 'Card', 'Other'),
-        allowNull: true
-    },
-    referenceNumber: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
     termsAndConditions: {
         type: DataTypes.JSON,
         allowNull: true
     }
 }, {
-    tableName: 'bills',
+    tableName: 'quotations',
     timestamps: true
 });
 
 // Define association
-User.hasMany(Bill, { foreignKey: 'userId' });
-Bill.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Quotation, { foreignKey: 'userId' });
+Quotation.belongsTo(User, { foreignKey: 'userId' });
 
-module.exports = Bill;
+module.exports = Quotation;

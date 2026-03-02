@@ -5,5 +5,7 @@ const verifyToken = require('../../middleware/authMiddleware');
 
 router.post('/', verifyToken, billsController.createBill);
 router.get('/', verifyToken, billsController.getBills);
+router.get('/:id', verifyToken, billsController.getBillById);
+router.patch('/:id/payment', verifyToken, billsController.updateBillPayment);
 
 module.exports = router;

@@ -43,12 +43,14 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
       "user": "John Doe",
       "companyname": "John's Tech",
       "address": "123 Main St",
+      "addressline2": "Near City Mall",
       "gstin": "29ABCDE1234F1Z5",
       "email": "john@example.com",
       "phone": "9876543210",
       "password": "secretpassword"
     }
     ```
+    > `addressline2` and `gstin` are optional fields.
 
 **Login**
 -   **URL:** `/api/users/login`
@@ -89,9 +91,11 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
     {
       "companyname": "New Company Name",
       "address": "New Address",
+      "addressline2": "Near City Mall",
       "gstin": "NEWGSTIN123"
     }
     ```
+    > `addressline2` and `gstin` are optional fields.
 
 ### 3️⃣ Bills (Requires Login)
 
@@ -104,10 +108,15 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
     ```json
     {
       "companyName": "My Company",
+      "companyNumber": "9876543210",
       "address": "My Address",
+      "addressLine2": "Near City Mall",
       "gstin": "MYGSTIN",
       "customerName": "Client Name",
       "customerNumber": "9988776655",
+      "customerGstin": "CUSTGSTIN123",
+      "customerAddressLine1": "Client Street 1",
+      "customerAddressLine2": "Client Street 2",
       "billDate": "2023-10-27",
       "billItems": [
         { "name": "Service A", "quantity": 1, "price": 1000, "discount": 0, "total": 1000 }
@@ -115,13 +124,36 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
       "subtotal": 1000,
       "tax": 18,
       "taxAmount": 180,
-      "grandTotal": 1180
+      "grandTotal": 1180,
+      "paymentStatus": "Pending",
+      "paymentMode": "UPI",
+      "referenceNumber": "REF123456",
+      "termsAndConditions": ["Payment due in 30 days"]
     }
     ```
+    > Optional fields: `companyNumber`, `addressLine2`, `customerGstin`, `customerAddressLine1`, `customerAddressLine2`, `paymentMode`, `referenceNumber`, `termsAndConditions`.
+    > `paymentStatus` defaults to `Pending` if not provided.
 
 **Get All Bills**
 -   **URL:** `/api/bills`
 -   **Method:** `GET`
+
+**Get a Single Bill**
+-   **URL:** `/api/bills/:id`
+-   **Method:** `GET`
+
+**Update Bill Payment**
+-   **URL:** `/api/bills/:id/payment`
+-   **Method:** `PUT`
+-   **Body:**
+    ```json
+    {
+      "paymentStatus": "Paid",
+      "paymentMode": "Bank Transfer",
+      "referenceNumber": "REF789"
+    }
+    ```
+    > All fields are optional. Only provided fields will be updated.
 
 ### 4️⃣ Products (Requires Login)
 
