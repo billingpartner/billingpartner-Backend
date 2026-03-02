@@ -232,6 +232,55 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
 
 ---
 
+### 6️⃣ Company Details (Requires Login)
+
+*Add Header: `Authorization: Bearer YOUR_TOKEN_HERE`*
+
+**Create a Company**
+-   **URL:** `/api/companydetails`
+-   **Method:** `POST`
+-   **Body:**
+    ```json
+    {
+      "companyname": "My Other Company",
+      "address": "456 Park Road",
+      "addressline2": "Suite 10",
+      "gstin": "22AAAAA0000A1Z5",
+      "phone": "9876543210",
+      "emailid": "company@example.com"
+    }
+    ```
+    > `addressline2`, `gstin`, and `emailid` are optional fields.
+
+**Get All Companies**
+-   **URL:** `/api/companydetails`
+-   **Method:** `GET`
+
+**Get a Single Company**
+-   **URL:** `/api/companydetails/:id`
+-   **Method:** `GET`
+
+**Update a Company**
+-   **URL:** `/api/companydetails/:id`
+-   **Method:** `PUT`
+-   **Body:**
+    ```json
+    {
+      "companyname": "Updated Company Name",
+      "address": "New Address",
+      "addressline2": "Floor 3",
+      "gstin": "NEWGSTIN123",
+      "phone": "9123456789",
+      "emailid": "updated@example.com"
+    }
+    ```
+
+**Delete a Company**
+-   **URL:** `/api/companydetails/:id`
+-   **Method:** `DELETE`
+
+---
+
 ## 🗄️ Database
 
 The project uses a MySQL database with the following tables:
@@ -239,5 +288,6 @@ The project uses a MySQL database with the following tables:
 2.  **Bills:** Stores billing records linked to users.
 3.  **Products:** Stores product details linked to users.
 4.  **Clients:** Stores client details (name, contact number) linked to users.
+5.  **CompanyDetails:** Stores multiple company profiles linked to users.
 
 The database tables are automatically created when you start the server.

@@ -8,6 +8,7 @@ const billsRoutes = require('./src/bills/billsRoutes');
 const productRoutes = require('./src/product/productRoutes');
 const clientRoutes = require('./src/client/clientRoutes');
 const quotationRoutes = require('./src/quotation/quotationRoutes');
+const companyDetailsRoutes = require('./src/companydetails/companyDetailsRoutes');
 const sequelize = require('./config/database');
 
 const app = express();
@@ -23,6 +24,7 @@ app.use('/api/bills', billsRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/quotations', quotationRoutes);
+app.use('/api/companydetails', companyDetailsRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
