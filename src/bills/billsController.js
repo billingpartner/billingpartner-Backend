@@ -1,4 +1,13 @@
 const Bill = require('./billsModel');
+const User = require('../user/userModel');
+
+// Helper: get userId from token, fall back to phone lookup for old tokens
+const getUserId = async (req) => {
+    if (req.userId) return req.userId;
+    const user = await User.findOne({ where: { phone: req.userPhone } });
+    if (!user) throw new Error('User not found');
+    return user.id;
+};
 
 const createBill = async (req, res) => {
     try {
@@ -15,8 +24,10 @@ const createBill = async (req, res) => {
             return res.status(400).send({ message: "Missing required fields" });
         }
 
+        const userId = await getUserId(req);
+
         const newBill = await Bill.create({
-            userId: req.userId,
+            userId,
             companyName,
             companyNumber: companyNumber || null,
             address,
@@ -48,7 +59,8 @@ const createBill = async (req, res) => {
 
 const getBills = async (req, res) => {
     try {
-        const bills = await Bill.findAll({ where: { userId: req.userId } });
+        const userId = await getUserId(req);
+        const bills = await Bill.findAll({ where: { userId } });
         res.status(200).send(bills);
     } catch (err) {
         console.error("Error fetching bills:", err);
@@ -58,11 +70,11 @@ const getBills = async (req, res) => {
 
 const getBillById = async (req, res) => {
     try {
-        const bill = await Bill.findOne({ where: { id: req.params.id, userId: req.userId } });
+        const userId = await getUserId(req);
+        const bill = await Bill.findOne({ where: { id: req.params.id, userId } });
         if (!bill) {
             return res.status(404).send({ message: "Bill not found" });
         }
-
         res.status(200).send(bill);
     } catch (err) {
         console.error("Error fetching bill:", err);
@@ -75,7 +87,8 @@ const updateBillPayment = async (req, res) => {
     try {
         const { paymentStatus, paymentMode, referenceNumber } = req.body;
 
-        const bill = await Bill.findOne({ where: { id: req.params.id, userId: req.userId } });
+        const userId = await getUserId(req);
+        const bill = await Bill.findOne({ where: { id: req.params.id, userId } });
         if (!bill) {
             return res.status(404).send({ message: "Bill not found" });
         }
@@ -86,7 +99,6 @@ const updateBillPayment = async (req, res) => {
         if (referenceNumber !== undefined) bill.referenceNumber = referenceNumber;
 
         await bill.save();
-
         res.status(200).send(bill);
     } catch (err) {
         console.error("Error updating bill payment:", err);

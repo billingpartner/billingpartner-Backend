@@ -1,4 +1,13 @@
 const Quotation = require('./quotationModel');
+const User = require('../user/userModel');
+
+// Helper: get userId from token, fall back to phone lookup for old tokens
+const getUserId = async (req) => {
+    if (req.userId) return req.userId;
+    const user = await User.findOne({ where: { phone: req.userPhone } });
+    if (!user) throw new Error('User not found');
+    return user.id;
+};
 
 const createQuotation = async (req, res) => {
     try {
@@ -15,8 +24,10 @@ const createQuotation = async (req, res) => {
             return res.status(400).send({ message: "Missing required fields" });
         }
 
+        const userId = await getUserId(req);
+
         const newQuotation = await Quotation.create({
-            userId: req.userId,
+            userId,
             companyName,
             companyNumber: companyNumber || null,
             address,
@@ -45,7 +56,8 @@ const createQuotation = async (req, res) => {
 
 const getQuotations = async (req, res) => {
     try {
-        const quotations = await Quotation.findAll({ where: { userId: req.userId } });
+        const userId = await getUserId(req);
+        const quotations = await Quotation.findAll({ where: { userId } });
         res.status(200).send(quotations);
     } catch (err) {
         console.error("Error fetching quotations:", err);
@@ -55,7 +67,8 @@ const getQuotations = async (req, res) => {
 
 const getQuotationById = async (req, res) => {
     try {
-        const quotation = await Quotation.findOne({ where: { id: req.params.id, userId: req.userId } });
+        const userId = await getUserId(req);
+        const quotation = await Quotation.findOne({ where: { id: req.params.id, userId } });
         if (!quotation) {
             return res.status(404).send({ message: "Quotation not found" });
         }
@@ -69,7 +82,8 @@ const getQuotationById = async (req, res) => {
 
 const deleteQuotation = async (req, res) => {
     try {
-        const deleted = await Quotation.destroy({ where: { id: req.params.id, userId: req.userId } });
+        const userId = await getUserId(req);
+        const deleted = await Quotation.destroy({ where: { id: req.params.id, userId } });
         if (!deleted) {
             return res.status(404).send({ message: "Quotation not found" });
         }
