@@ -281,6 +281,44 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
 
 ---
 
+### 7️⃣ Terms and Conditions (Requires Login)
+
+*Add Header: `Authorization: Bearer YOUR_TOKEN_HERE`*
+
+**Create Terms and Conditions**
+-   **URL:** `/api/termsandconditions`
+-   **Method:** `POST`
+-   **Body:**
+    ```json
+    {
+      "termsandconditions": ["Payment due in 30 days", "No refunds after delivery"]
+    }
+    ```
+
+**Get All Terms and Conditions**
+-   **URL:** `/api/termsandconditions`
+-   **Method:** `GET`
+
+**Get a Single Terms and Conditions**
+-   **URL:** `/api/termsandconditions/:id`
+-   **Method:** `GET`
+
+**Update Terms and Conditions**
+-   **URL:** `/api/termsandconditions/:id`
+-   **Method:** `PUT`
+-   **Body:**
+    ```json
+    {
+      "termsandconditions": ["Updated term 1", "Updated term 2"]
+    }
+    ```
+
+**Delete Terms and Conditions**
+-   **URL:** `/api/termsandconditions/:id`
+-   **Method:** `DELETE`
+
+---
+
 ## 🗄️ Database
 
 The project uses a MySQL database with the following tables:
@@ -289,5 +327,6 @@ The project uses a MySQL database with the following tables:
 3.  **Products:** Stores product details linked to users.
 4.  **Clients:** Stores client details (name, contact number) linked to users.
 5.  **CompanyDetails:** Stores multiple company profiles linked to users.
+6.  **TermsAndConditions:** Stores terms and conditions (JSON) linked to users.
 
 The database tables are automatically created when you start the server.
