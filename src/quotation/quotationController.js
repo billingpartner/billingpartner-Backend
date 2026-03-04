@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Quotation = require('./quotationModel');
 const User = require('../user/userModel');
 
@@ -57,7 +58,21 @@ const createQuotation = async (req, res) => {
 const getQuotations = async (req, res) => {
     try {
         const userId = await getUserId(req);
-        const quotations = await Quotation.findAll({ where: { userId } });
+        const { fromDate, toDate, paymentStatus } = req.query;
+
+        const where = { userId };
+
+        if (paymentStatus) {
+            where.paymentStatus = paymentStatus;
+        }
+
+        if (fromDate || toDate) {
+            where.billDate = {};
+            if (fromDate) where.billDate[Op.gte] = fromDate;
+            if (toDate) where.billDate[Op.lte] = toDate;
+        }
+
+        const quotations = await Quotation.findAll({ where });
         res.status(200).send(quotations);
     } catch (err) {
         console.error("Error fetching quotations:", err);

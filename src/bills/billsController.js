@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Bill = require('./billsModel');
 const User = require('../user/userModel');
 
@@ -60,7 +61,25 @@ const createBill = async (req, res) => {
 const getBills = async (req, res) => {
     try {
         const userId = await getUserId(req);
-        const bills = await Bill.findAll({ where: { userId } });
+        const { fromDate, toDate, paymentStatus, paymentMode } = req.query;
+
+        const where = { userId };
+
+        if (paymentStatus) {
+            where.paymentStatus = paymentStatus;
+        }
+
+        if (paymentMode) {
+            where.paymentMode = paymentMode;
+        }
+
+        if (fromDate || toDate) {
+            where.billDate = {};
+            if (fromDate) where.billDate[Op.gte] = fromDate;
+            if (toDate) where.billDate[Op.lte] = toDate;
+        }
+
+        const bills = await Bill.findAll({ where });
         res.status(200).send(bills);
     } catch (err) {
         console.error("Error fetching bills:", err);
