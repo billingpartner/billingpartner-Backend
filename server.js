@@ -10,6 +10,7 @@ const clientRoutes = require('./src/client/clientRoutes');
 const quotationRoutes = require('./src/quotation/quotationRoutes');
 const companyDetailsRoutes = require('./src/companydetails/companyDetailsRoutes');
 const termsAndConditionsRoutes = require('./src/termsandconditions/termsAndConditionsRoutes');
+const expenditureRoutes = require('./src/expenditure/expenditureRoutes');
 const sequelize = require('./config/database');
 
 const app = express();
@@ -27,6 +28,7 @@ app.use('/api/clients', clientRoutes);
 app.use('/api/quotations', quotationRoutes);
 app.use('/api/companydetails', companyDetailsRoutes);
 app.use('/api/termsandconditions', termsAndConditionsRoutes);
+app.use('/api/expenditures', expenditureRoutes);
 
 // Basic route
 app.get('/', (req, res) => {

@@ -319,6 +319,53 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
 
 ---
 
+### 8️⃣ Expenditures (Requires Login)
+
+*Add Header: `Authorization: Bearer YOUR_TOKEN_HERE`*
+
+**Create an Expenditure**
+-   **URL:** `/api/expenditures`
+-   **Method:** `POST`
+-   **Body:**
+    ```json
+    {
+      "category": "Office Supplies",
+      "amount": 1500.00,
+      "date": "2023-11-01",
+      "description": "Stationery and papers",
+      "paymentMethod": "Cash",
+      "referenceNumber": "REF456"
+    }
+    ```
+    > `date`, `description`, and `referenceNumber` are optional fields.
+
+**Get All Expenditures**
+-   **URL:** `/api/expenditures`
+-   **Method:** `GET`
+-   **Query Parameters:** `category`, `paymentMethod`, `fromDate`, `toDate` (All optional)
+
+**Get a Single Expenditure**
+-   **URL:** `/api/expenditures/:id`
+-   **Method:** `GET`
+
+**Update an Expenditure**
+-   **URL:** `/api/expenditures/:id`
+-   **Method:** `PUT`
+-   **Body:**
+    ```json
+    {
+      "amount": 1600.00,
+      "category": "Stationery"
+    }
+    ```
+    > All fields are optional. Only provided fields will be updated.
+
+**Delete an Expenditure**
+-   **URL:** `/api/expenditures/:id`
+-   **Method:** `DELETE`
+
+---
+
 ## 🗄️ Database
 
 The project uses a MySQL database with the following tables:
@@ -328,5 +375,6 @@ The project uses a MySQL database with the following tables:
 4.  **Clients:** Stores client details (name, contact number) linked to users.
 5.  **CompanyDetails:** Stores multiple company profiles linked to users.
 6.  **TermsAndConditions:** Stores terms and conditions (JSON) linked to users.
+7.  **Expenditures:** Stores expenditure records linked to users.
 
 The database tables are automatically created when you start the server.
