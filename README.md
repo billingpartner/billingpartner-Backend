@@ -366,6 +366,71 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
 
 ---
 
+### 9️⃣ Purchase Orders (Requires Login)
+
+*Add Header: `Authorization: Bearer YOUR_TOKEN_HERE`*
+
+**Create a Purchase Order**
+-   **URL:** `/api/purchaseorders`
+-   **Method:** `POST`
+-   **Body:**
+    ```json
+    {
+      "companyName": "My Company",
+      "name": "John Doe",
+      "addressLine1": "123 Main St",
+      "addressLine2": "Industrial Area",
+      "mailId": "john@company.com",
+      "phoneNo": "9876543210",
+      "gstin": "29ABCDE1234F1Z5",
+      "vendorCompanyName": "Vendor Corp",
+      "vendorName": "Jane Smith",
+      "vendorAddressLine1": "456 Vendor Lane",
+      "vendorAddressLine2": "Warehouse District",
+      "vendorMailId": "jane@vendor.com",
+      "vendorPhoneNo": "9123456789",
+      "vendorGstin": "29XYZDE1234F1Z5",
+      "items": [
+        { "name": "Bulk Material", "quantity": 100, "price": 50, "total": 5000 }
+      ],
+      "subtotal": 5000,
+      "tax": 18,
+      "grandTotal": 5900,
+      "paymentStatus": "Pending",
+      "paymentMethod": "Bank Transfer",
+      "paymentReferenceNo": "PO-REF-789",
+      "termsAndConditions": "Delivery within 15 days.",
+      "poDate": "2023-11-05"
+    }
+    ```
+
+**Get All Purchase Orders**
+-   **URL:** `/api/purchaseorders`
+-   **Method:** `GET`
+-   **Query Parameters:** `vendorCompanyName`, `paymentStatus`, `paymentMethod`, `fromDate`, `toDate` (All optional)
+
+**Get a Single Purchase Order**
+-   **URL:** `/api/purchaseorders/:id`
+-   **Method:** `GET`
+
+**Update a Purchase Order**
+-   **URL:** `/api/purchaseorders/:id`
+-   **Method:** `PUT`
+-   **Body:**
+    ```json
+    {
+      "paymentStatus": "Paid",
+      "grandTotal": 6000
+    }
+    ```
+    > All fields are optional. Only provided fields will be updated.
+
+**Delete a Purchase Order**
+-   **URL:** `/api/purchaseorders/:id`
+-   **Method:** `DELETE`
+
+---
+
 ## 🗄️ Database
 
 The project uses a MySQL database with the following tables:
@@ -376,5 +441,6 @@ The project uses a MySQL database with the following tables:
 5.  **CompanyDetails:** Stores multiple company profiles linked to users.
 6.  **TermsAndConditions:** Stores terms and conditions (JSON) linked to users.
 7.  **Expenditures:** Stores expenditure records linked to users.
+8.  **PurchaseOrders:** Stores purchase order records linked to users.
 
 The database tables are automatically created when you start the server.
