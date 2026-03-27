@@ -30,9 +30,39 @@ exports.createCompanyDetails = async (req, res) => {
 exports.getCompanyDetails = async (req, res) => {
     try {
         const userid = req.userId;
+        const userPhone = req.userPhone;
 
+        // Get company details from companydetails table
         const companies = await CompanyDetails.findAll({ where: { userid } });
-        res.status(200).json(companies);
+
+        // Get user's company details from user table
+        const User = require('../user/userModel');
+        const user = await User.findOne({ where: { id: userid } });
+        let userCompanyDetails = null;
+        if (user) {
+            userCompanyDetails = {
+                id: user.id,
+                companyname: user.companyname,
+                address: user.address,
+                addressline2: user.addressline2,
+                gstin: user.gstin,
+                phone: user.phone,
+                emailid: user.email,
+                userid: user.id
+            };
+        }
+
+        // Combine user company details with companies from companydetails table
+        let result = companies.map(c => c.toJSON());
+        if (userCompanyDetails) {
+            // Only add if not already present (by id)
+            const exists = result.some(c => c.id === userCompanyDetails.id);
+            if (!exists) {
+                result.unshift(userCompanyDetails);
+            }
+        }
+
+        res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching company details.', error: error.message });
     }
