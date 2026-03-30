@@ -8,7 +8,7 @@ const Client = sequelize.define('Client', {
         autoIncrement: true,
         primaryKey: true
     },
-    customercampanyname: {
+    customercompanyname: {
         type: DataTypes.STRING,
         allowNull: true
     },
