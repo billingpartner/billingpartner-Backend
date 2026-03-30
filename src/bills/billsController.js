@@ -21,9 +21,9 @@ const createBill = async (req, res) => {
         } = req.body;
 
         // Basic validation
-        if (!companyName || !address || !gstin || !customerName || !customerNumber || !billItems || !grandTotal) {
-            return res.status(400).send({ message: "Missing required fields" });
-        }
+        // if (!companyName || !address || !gstin || !customerName || !customerNumber || !billItems || !grandTotal) {
+        //     return res.status(400).send({ message: "Missing required fields" });
+        // }
 
         const userId = await getUserId(req);
 
