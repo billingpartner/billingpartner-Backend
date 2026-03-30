@@ -4,7 +4,7 @@ const User = require('../user/userModel');
 // Create a new client
 exports.createClient = async (req, res) => {
     try {
-        const { customerName, contactNumber, customergstin } = req.body;
+        const { customerName, contactNumber, customergstin, customercampanyname, customeraddress, customeraddressline2, customeremailid } = req.body;
         const userPhone = req.userPhone;
 
         const user = await User.findOne({ where: { phone: userPhone } });
@@ -16,6 +16,10 @@ exports.createClient = async (req, res) => {
             customerName,
             contactNumber,
             customergstin,
+            customercampanyname,
+            customeraddress,
+            customeraddressline2,
+            customeremailid,
             userid: user.id
         });
 
@@ -68,7 +72,7 @@ exports.getClientById = async (req, res) => {
 exports.updateClient = async (req, res) => {
     try {
         const { id } = req.params;
-        const { customerName, contactNumber, customergstin } = req.body;
+        const { customerName, contactNumber, customergstin, customercampanyname, customeraddress, customeraddressline2, customeremailid } = req.body;
         const userPhone = req.userPhone;
 
         const user = await User.findOne({ where: { phone: userPhone } });
@@ -84,6 +88,10 @@ exports.updateClient = async (req, res) => {
         client.customerName = customerName || client.customerName;
         client.contactNumber = contactNumber || client.contactNumber;
         client.customergstin = customergstin !== undefined ? customergstin : client.customergstin;
+        client.customercampanyname = customercampanyname !== undefined ? customercampanyname : client.customercampanyname;
+        client.customeraddress = customeraddress !== undefined ? customeraddress : client.customeraddress;
+        client.customeraddressline2 = customeraddressline2 !== undefined ? customeraddressline2 : client.customeraddressline2;
+        client.customeremailid = customeremailid !== undefined ? customeremailid : client.customeremailid;
 
         await client.save();
 

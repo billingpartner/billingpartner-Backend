@@ -8,6 +8,10 @@ const Client = sequelize.define('Client', {
         autoIncrement: true,
         primaryKey: true
     },
+    customercampanyname: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     customerName: {
         type: DataTypes.STRING,
         allowNull: false
@@ -17,6 +21,18 @@ const Client = sequelize.define('Client', {
         allowNull: false
     },
     customergstin: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    customeraddress: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    customeraddressline2: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    customeremailid: {
         type: DataTypes.STRING,
         allowNull: true
     },
