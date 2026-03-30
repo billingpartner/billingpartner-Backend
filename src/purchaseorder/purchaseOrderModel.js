@@ -18,15 +18,15 @@ const PurchaseOrder = sequelize.define('PurchaseOrder', {
     },
     companyName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     addressLine1: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     addressLine2: {
         type: DataTypes.STRING,
@@ -46,15 +46,15 @@ const PurchaseOrder = sequelize.define('PurchaseOrder', {
     },
     vendorCompanyName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     vendorName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     vendorAddressLine1: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     vendorAddressLine2: {
         type: DataTypes.STRING,
@@ -74,23 +74,23 @@ const PurchaseOrder = sequelize.define('PurchaseOrder', {
     },
     items: {
         type: DataTypes.JSON,
-        allowNull: false
+        allowNull: true
     },
     subtotal: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false
+        allowNull: true
     },
     tax: {
         type: DataTypes.DECIMAL(5, 2),
-        allowNull: false
+        allowNull: true
     },
     grandTotal: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false
+        allowNull: true
     },
     paymentStatus: {
         type: DataTypes.ENUM('Pending', 'Paid', 'Partial', 'Cancelled'),
-        allowNull: false,
+        allowNull: true,
         defaultValue: 'Pending'
     },
     paymentMethod: {
@@ -107,7 +107,7 @@ const PurchaseOrder = sequelize.define('PurchaseOrder', {
     },
     poDate: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
+        allowNull: true,
         defaultValue: DataTypes.NOW
     }
 }, {

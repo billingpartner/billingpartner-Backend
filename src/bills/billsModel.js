@@ -18,7 +18,7 @@ const Bill = sequelize.define('Bill', {
     },
     companyName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     companyNumber: {
         type: DataTypes.STRING,
@@ -26,7 +26,7 @@ const Bill = sequelize.define('Bill', {
     },
     address: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     addressLine2: {
         type: DataTypes.STRING,
@@ -34,15 +34,15 @@ const Bill = sequelize.define('Bill', {
     },
     gstin: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     customerName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     customerNumber: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     customerGstin: {
         type: DataTypes.STRING,
@@ -58,32 +58,32 @@ const Bill = sequelize.define('Bill', {
     },
     billDate: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
+        allowNull: true,
         defaultValue: DataTypes.NOW
     },
     billItems: {
         type: DataTypes.JSON,
-        allowNull: false
+        allowNull: true
     },
     subtotal: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false
+        allowNull: true
     },
     tax: {
         type: DataTypes.DECIMAL(5, 2),
-        allowNull: false
+        allowNull: true
     },
     taxAmount: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false
+        allowNull: true
     },
     grandTotal: {
         type: DataTypes.DECIMAL(10, 2),
-        allowNull: false
+        allowNull: true
     },
     paymentStatus: {
         type: DataTypes.ENUM('Pending', 'Paid', 'Partial', 'Cancelled'),
-        allowNull: false,
+        allowNull: true,
         defaultValue: 'Pending'
     },
     paymentMode: {
