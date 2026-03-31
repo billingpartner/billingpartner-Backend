@@ -35,6 +35,16 @@ const Product = sequelize.define('Product', {
             model: User,
             key: 'id'
         }
+    },
+    isproduct: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
+    isService: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 }, {
     tableName: 'products',

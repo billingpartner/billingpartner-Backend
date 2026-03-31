@@ -3,7 +3,7 @@ const User = require('../user/userModel');
 
 exports.createProduct = async (req, res) => {
     try {
-        const { name, category, price, subcategory, quantity } = req.body;
+        const { name, category, price, subcategory, quantity, isproduct, isService } = req.body;
         const userPhone = req.userPhone;
 
         const user = await User.findOne({ where: { phone: userPhone } });
@@ -17,6 +17,8 @@ exports.createProduct = async (req, res) => {
             subcategory,
             price,
             quantity,
+            isproduct,
+            isService,
             userid: user.id
         });
 
@@ -45,7 +47,7 @@ exports.getProducts = async (req, res) => {
 exports.updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, category, price, subcategory, quantity } = req.body;
+        const { name, category, price, subcategory, quantity, isproduct, isService } = req.body;
         const userPhone = req.userPhone;
 
         const user = await User.findOne({ where: { phone: userPhone } });
@@ -64,6 +66,8 @@ exports.updateProduct = async (req, res) => {
         product.subcategory = subcategory || product.subcategory;
         product.price = price || product.price;
         product.quantity = quantity || product.quantity;
+        product.isproduct = isproduct || product.isproduct;
+        product.isService = isService || product.isService;
 
         await product.save();
 
