@@ -20,6 +20,10 @@ const Product = sequelize.define('Product', {
         type: DataTypes.FLOAT,
         allowNull: false
     },
+    subcategory: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     userid: {
         type: DataTypes.INTEGER,
         allowNull: false,
