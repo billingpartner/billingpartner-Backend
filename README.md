@@ -167,9 +167,12 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
     {
       "name": "Product Name",
       "category": "Category Name",
-      "price": 100.50
+      "subcategory": "Subcategory Name",
+      "price": 100.50,
+      "quantity": 10
     }
     ```
+    > `category`, `subcategory`, and `quantity` are optional fields.
 
 **Get All Products**
 -   **URL:** `/api/products`
@@ -182,9 +185,13 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
     ```json
     {
       "name": "Updated Name",
-      "price": 150.00
+      "category": "Updated Category",
+      "subcategory": "Updated Subcategory",
+      "price": 150.00,
+      "quantity": 20
     }
     ```
+    > All fields are optional. Only provided fields will be updated.
 
 **Delete a Product**
 -   **URL:** `/api/products/:id`
@@ -434,7 +441,7 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
 ## 🗄️ Database
 
 The project uses a MySQL database with the following tables:
-1.  **Users:** Stores user login and profile info.
+1.  **Users:** Stores user login and profile info. (Phone numbers must be unique.)
 2.  **Bills:** Stores billing records linked to users.
 3.  **Products:** Stores product details linked to users.
 4.  **Clients:** Stores client details (name, contact number) linked to users.
