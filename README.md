@@ -169,10 +169,12 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
       "category": "Category Name",
       "subcategory": "Subcategory Name",
       "price": 100.50,
-      "quantity": 10
+      "quantity": 10,
+      "isproduct": true,
+      "isService": false
     }
     ```
-    > `category`, `subcategory`, and `quantity` are optional fields.
+    > `category`, `subcategory`, `quantity`, `isproduct`, and `isService` are optional fields.
 
 **Get All Products**
 -   **URL:** `/api/products`
@@ -188,7 +190,9 @@ A simple and secure Node.js backend for managing User Profiles, Bills, Products,
       "category": "Updated Category",
       "subcategory": "Updated Subcategory",
       "price": 150.00,
-      "quantity": 20
+      "quantity": 20,
+      "isproduct": false,
+      "isService": true
     }
     ```
     > All fields are optional. Only provided fields will be updated.

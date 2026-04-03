@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const Bill = require('./billsModel');
 const User = require('../user/userModel');
+const Product = require('../product/productModel');
 
 // Helper: get userId from token, fall back to phone lookup for old tokens
 const getUserId = async (req) => {
@@ -50,6 +51,22 @@ const createBill = async (req, res) => {
             referenceNumber: referenceNumber || null,
             termsAndConditions: termsAndConditions || null
         });
+
+        // Inventory management: Subtract quantities from products
+        if (billItems && Array.isArray(billItems)) {
+            for (const item of billItems) {
+                if (item.productId) {
+                    const product = await Product.findByPk(item.productId);
+                    if (product && product.isproduct) {
+                        const currentQuantity = product.quantity || 0;
+                        const billedQuantity = parseInt(item.quantity) || 0;
+                        const newQuantity = Math.max(0, currentQuantity - billedQuantity);
+
+                        await product.update({ quantity: newQuantity });
+                    }
+                }
+            }
+        }
 
         res.status(201).send(newBill);
     } catch (err) {
